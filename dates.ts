@@ -1,0 +1,25 @@
+import { Temporal } from "temporal-polyfill";
+
+export function getCurrentMonthStart() {
+	const now = Temporal.Now.zonedDateTimeISO();
+	const { year, month } = now;
+	const date = Temporal.PlainDate.from(
+		`${year}-${month.toString().padStart(2, "0")}-01`,
+	);
+
+	return {
+		date,
+		startTimestamp: date.toZonedDateTime("UTC").epochSeconds,
+		daysInMonth: date.daysInMonth,
+		year,
+		month,
+		monthName: now.toLocaleString("en-US", { month: "long" }),
+	};
+}
+
+export function formatCurrency(value: number, currency = "USD"): string {
+	return value.toLocaleString("en-US", {
+		style: "currency",
+		currency,
+	});
+}

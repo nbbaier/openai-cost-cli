@@ -1,0 +1,20 @@
+{
+	"name": "batch",
+	"module": "index.ts",
+	"type": "module",
+	"scripts": {
+		"start": "bun run.ts",
+		"token-usage": "bun tokenUsage.ts"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@better-fetch/fetch": "^1.1.13",
+		"temporal-polyfill": "^0.2.5",
+		"zod": "^3.24.2"
+	}
+}
