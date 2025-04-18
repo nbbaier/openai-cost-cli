@@ -1,0 +1,278 @@
+import type { openaiPrices } from "../types";
+
+const data: openaiPrices = {
+	"gpt-4": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.00003,
+	},
+	"gpt-4.1": {
+		output_cost_per_token: 0.000008,
+		input_cost_per_token: 0.000002,
+	},
+	"gpt-4.1-2025-04-14": {
+		output_cost_per_token: 0.000008,
+		input_cost_per_token: 0.000002,
+	},
+	"gpt-4.1-mini": {
+		output_cost_per_token: 0.0000016,
+		input_cost_per_token: 4e-7,
+	},
+	"gpt-4.1-mini-2025-04-14": {
+		output_cost_per_token: 0.0000016,
+		input_cost_per_token: 4e-7,
+	},
+	"gpt-4.1-nano": {
+		output_cost_per_token: 4e-7,
+		input_cost_per_token: 1e-7,
+	},
+	"gpt-4.1-nano-2025-04-14": {
+		output_cost_per_token: 4e-7,
+		input_cost_per_token: 1e-7,
+	},
+	"gpt-4o": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-search-preview-2025-03-11": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-search-preview": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4.5-preview": {
+		output_cost_per_token: 0.00015,
+		input_cost_per_token: 0.000075,
+	},
+	"gpt-4.5-preview-2025-02-27": {
+		output_cost_per_token: 0.00015,
+		input_cost_per_token: 0.000075,
+	},
+	"gpt-4o-audio-preview": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-audio-preview-2024-12-17": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-audio-preview-2024-10-01": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-mini-audio-preview-2024-12-17": {
+		output_cost_per_token: 6e-7,
+		input_cost_per_token: 1.5e-7,
+	},
+	"gpt-4o-mini": {
+		output_cost_per_token: 6e-7,
+		input_cost_per_token: 1.5e-7,
+	},
+	"gpt-4o-mini-search-preview-2025-03-11": {
+		output_cost_per_token: 6e-7,
+		input_cost_per_token: 1.5e-7,
+	},
+	"gpt-4o-mini-search-preview": {
+		output_cost_per_token: 6e-7,
+		input_cost_per_token: 1.5e-7,
+	},
+	"gpt-4o-mini-2024-07-18": {
+		output_cost_per_token: 6e-7,
+		input_cost_per_token: 1.5e-7,
+	},
+	o1: {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.000015,
+	},
+	"o1-mini": {
+		output_cost_per_token: 0.0000044,
+		input_cost_per_token: 0.0000011,
+	},
+	o3: {
+		output_cost_per_token: 0.00004,
+		input_cost_per_token: 0.00001,
+	},
+	"o3-2025-04-16": {
+		output_cost_per_token: 0.00004,
+		input_cost_per_token: 0.00001,
+	},
+	"o3-mini": {
+		output_cost_per_token: 0.0000044,
+		input_cost_per_token: 0.0000011,
+	},
+	"o3-mini-2025-01-31": {
+		output_cost_per_token: 0.0000044,
+		input_cost_per_token: 0.0000011,
+	},
+	"o4-mini": {
+		output_cost_per_token: 0.0000044,
+		input_cost_per_token: 0.0000011,
+	},
+	"o4-mini-2025-04-16": {
+		output_cost_per_token: 0.0000044,
+		input_cost_per_token: 0.0000011,
+	},
+	"o1-mini-2024-09-12": {
+		output_cost_per_token: 0.000012,
+		input_cost_per_token: 0.000003,
+	},
+	"o1-preview": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.000015,
+	},
+	"o1-preview-2024-09-12": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.000015,
+	},
+	"o1-2024-12-17": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.000015,
+	},
+	"chatgpt-4o-latest": {
+		output_cost_per_token: 0.000015,
+		input_cost_per_token: 0.000005,
+	},
+	"gpt-4o-2024-05-13": {
+		output_cost_per_token: 0.000015,
+		input_cost_per_token: 0.000005,
+	},
+	"gpt-4o-2024-08-06": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-2024-11-20": {
+		output_cost_per_token: 0.00001,
+		input_cost_per_token: 0.0000025,
+	},
+	"gpt-4o-realtime-preview-2024-10-01": {
+		output_cost_per_token: 0.00002,
+		input_cost_per_token: 0.000005,
+	},
+	"gpt-4o-realtime-preview": {
+		output_cost_per_token: 0.00002,
+		input_cost_per_token: 0.000005,
+	},
+	"gpt-4o-realtime-preview-2024-12-17": {
+		output_cost_per_token: 0.00002,
+		input_cost_per_token: 0.000005,
+	},
+	"gpt-4o-mini-realtime-preview": {
+		output_cost_per_token: 0.0000024,
+		input_cost_per_token: 6e-7,
+	},
+	"gpt-4o-mini-realtime-preview-2024-12-17": {
+		output_cost_per_token: 0.0000024,
+		input_cost_per_token: 6e-7,
+	},
+	"gpt-4-turbo-preview": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-4-0314": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.00003,
+	},
+	"gpt-4-0613": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.00003,
+	},
+	"gpt-4-32k": {
+		output_cost_per_token: 0.00012,
+		input_cost_per_token: 0.00006,
+	},
+	"gpt-4-32k-0314": {
+		output_cost_per_token: 0.00012,
+		input_cost_per_token: 0.00006,
+	},
+	"gpt-4-32k-0613": {
+		output_cost_per_token: 0.00012,
+		input_cost_per_token: 0.00006,
+	},
+	"gpt-4-turbo": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-4-turbo-2024-04-09": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-4-1106-preview": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-4-0125-preview": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-4-vision-preview": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-4-1106-vision-preview": {
+		output_cost_per_token: 0.00003,
+		input_cost_per_token: 0.00001,
+	},
+	"gpt-3.5-turbo": {
+		output_cost_per_token: 0.000002,
+		input_cost_per_token: 0.0000015,
+	},
+	"gpt-3.5-turbo-0301": {
+		output_cost_per_token: 0.000002,
+		input_cost_per_token: 0.0000015,
+	},
+	"gpt-3.5-turbo-0613": {
+		output_cost_per_token: 0.000002,
+		input_cost_per_token: 0.0000015,
+	},
+	"gpt-3.5-turbo-1106": {
+		output_cost_per_token: 0.000002,
+		input_cost_per_token: 0.000001,
+	},
+	"gpt-3.5-turbo-0125": {
+		output_cost_per_token: 0.0000015,
+		input_cost_per_token: 5e-7,
+	},
+	"gpt-3.5-turbo-16k": {
+		output_cost_per_token: 0.000004,
+		input_cost_per_token: 0.000003,
+	},
+	"gpt-3.5-turbo-16k-0613": {
+		output_cost_per_token: 0.000004,
+		input_cost_per_token: 0.000003,
+	},
+	"ft:gpt-3.5-turbo": {
+		output_cost_per_token: 0.000006,
+		input_cost_per_token: 0.000003,
+	},
+	"ft:gpt-3.5-turbo-0125": {
+		output_cost_per_token: 0.000006,
+		input_cost_per_token: 0.000003,
+	},
+	"ft:gpt-3.5-turbo-1106": {
+		output_cost_per_token: 0.000006,
+		input_cost_per_token: 0.000003,
+	},
+	"ft:gpt-3.5-turbo-0613": {
+		output_cost_per_token: 0.000006,
+		input_cost_per_token: 0.000003,
+	},
+	"ft:gpt-4-0613": {
+		output_cost_per_token: 0.00006,
+		input_cost_per_token: 0.00003,
+	},
+	"ft:gpt-4o-2024-08-06": {
+		output_cost_per_token: 0.000015,
+		input_cost_per_token: 0.00000375,
+	},
+	"ft:gpt-4o-2024-11-20": {
+		output_cost_per_token: 0.000015,
+		input_cost_per_token: 0.00000375,
+	},
+	"ft:gpt-4o-mini-2024-07-18": {
+		output_cost_per_token: 0.0000012,
+		input_cost_per_token: 3e-7,
+	},
+};
+
+export default data;

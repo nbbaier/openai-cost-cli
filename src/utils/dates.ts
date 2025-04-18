@@ -16,10 +16,3 @@ export function getCurrentMonthStart() {
 		monthName: now.toLocaleString("en-US", { month: "long" }),
 	};
 }
-
-export function formatCurrency(value: number, currency = "USD"): string {
-	return value.toLocaleString("en-US", {
-		style: "currency",
-		currency,
-	});
-}

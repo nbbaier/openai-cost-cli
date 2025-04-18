@@ -1,10 +1,11 @@
 {
 	"name": "batch",
-	"module": "index.ts",
+	"module": "src/inde.js",
 	"type": "module",
 	"scripts": {
-		"start": "bun run.ts",
-		"token-usage": "bun tokenUsage.ts"
+		"cost": "bun src/index.ts",
+		"tokens": "bun src/tokenUsage.ts",
+		"token-costs": "bun src/tokenCosts.ts"
 	},
 	"devDependencies": {
 		"@types/bun": "latest"

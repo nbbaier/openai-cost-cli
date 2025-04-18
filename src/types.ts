@@ -56,19 +56,24 @@ type Mode =
 export interface ProviderConfig {
 	// LEGACY parameter. set to max_output_tokens if provider specifies it.
 	// IF not set to max_input_tokens, if provider specifies it.
-	max_tokens: string;
+	max_tokens: string | number;
 
 	// max input tokens, if the provider specifies it.
 	// if not default to max_tokens.
-	max_input_tokens: string;
+	max_input_tokens: string | number;
 
 	// max output tokens, if the provider specifies it.
 	// if not default to max_tokens.
-	max_output_tokens: string;
+	max_output_tokens: string | number;
 
 	input_cost_per_token: number;
 	output_cost_per_token: number;
-
+	input_cost_per_token_batches: number;
+	output_cost_per_token_batches: number;
+	cache_read_input_token_cost: number;
+	supported_endpoints: string[];
+	supported_modalities: string[];
+	supported_output_modalities: string[];
 	// one of https://docs.litellm.ai/docs/providers
 	litellm_provider: string;
 
@@ -85,9 +90,19 @@ export interface ProviderConfig {
 	supports_system_messages: boolean;
 	supports_reasoning: boolean;
 	supports_web_search: boolean;
+	supports_tool_choice: boolean;
+	supports_native_streaming: boolean;
 
 	search_context_cost_per_query: SearchContextCost;
 
 	// date when the model becomes deprecated in the format YYYY-MM-DD.
 	deprecation_date: string;
 }
+
+export type openaiPrices = Record<
+	string,
+	{
+		output_cost_per_token: number;
+		input_cost_per_token: number;
+	}
+>;
