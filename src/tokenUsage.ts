@@ -12,3 +12,5 @@ try {
 } catch (error) {
 	console.error("Error fetching token usage:", error);
 }
+
+`https://api.openai.com/v1/organization/usage/completions?start_time=${startTime}&group_by=project_id&group_by=model&group_by=batch&limit=${days}`;

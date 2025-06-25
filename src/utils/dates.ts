@@ -1,5 +1,10 @@
 import { Temporal } from "temporal-polyfill";
 
+export function getDayStart() {
+	const now = Temporal.Now.zonedDateTimeISO();
+	console.log(now.toString());
+}
+
 export function getCurrentMonthStart() {
 	const now = Temporal.Now.zonedDateTimeISO();
 	const { year, month } = now;

@@ -15,6 +15,8 @@
 	},
 	"dependencies": {
 		"@better-fetch/fetch": "^1.1.13",
+		"@commander-js/extra-typings": "^13.1.0",
+		"commander": "^13.1.0",
 		"temporal-polyfill": "^0.2.5",
 		"zod": "^3.24.2"
 	}

@@ -1,3 +1,3 @@
-import getMonthlyCost from "./getMontlyCost";
+import getMonthlyCost from "./getMonthlyCost";
 
 getMonthlyCost();
