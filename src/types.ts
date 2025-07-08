@@ -95,7 +95,6 @@ export interface ProviderConfig {
 
 	search_context_cost_per_query: SearchContextCost;
 
-	// date when the model becomes deprecated in the format YYYY-MM-DD.
 	deprecation_date: string;
 }
 
