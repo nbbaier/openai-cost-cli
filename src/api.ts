@@ -1,6 +1,6 @@
 import { betterFetch } from "@better-fetch/fetch";
+import { z } from "zod/v4";
 import type { CompletionsObject, CostsObject, Page } from "./types";
-import { z } from "zod";
 
 // Environment validation
 const envSchema = z.object({
