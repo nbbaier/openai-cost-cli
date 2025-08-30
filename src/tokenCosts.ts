@@ -15,7 +15,7 @@ try {
 		"Total cost:",
 		formatCurrency(
 			Object.entries(sumByModelWithCost).reduce(
-				(acc, [model, { cost }]) => acc + cost,
+				(acc, [_model, { cost }]) => acc + cost,
 				0,
 			),
 		),
