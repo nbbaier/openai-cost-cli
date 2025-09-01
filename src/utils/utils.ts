@@ -1,5 +1,7 @@
-import type { CompletionsObject } from "../types";
-import pricing from "./priceData";
+import type { CompletionsObject, openaiPrices } from "../types";
+import data from "./priceData.json" with { type: "json" };
+
+const { pricing } = data as { pricing: openaiPrices };
 
 export function summarizeTokenUsageByModel(completions: CompletionsObject[]) {
 	const filteredResults = completions
