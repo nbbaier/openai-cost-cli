@@ -11,9 +11,11 @@
 		"cost": "bun src/index.ts",
 		"tokens": "bun src/tokenUsage.ts",
 		"token-costs": "bun src/tokenCosts.ts",
+		"update-prices": "bun src/utils/updatePrices.ts",
 		"lint": "bunx biome check .",
 		"format": "bunx biome format . --write",
-		"lint:fix": "bunx biome check . --write"
+		"lint:fix": "bunx biome check . --write",
+		"typecheck": "tsgo --noEmit"
 	},
 	"keywords": [
 		"openai",
@@ -27,7 +29,8 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "2.0.6",
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"@typescript/native-preview": "^7.0.0-dev.20250901.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.7.3"
@@ -39,5 +42,7 @@
 	},
 	"engines": {
 		"bun": ">=1.0.0"
-	}
+	},
+	"module": "src/index.ts",
+	"private": true
 }
