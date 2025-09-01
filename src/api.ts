@@ -1,5 +1,5 @@
 import { betterFetch } from "@better-fetch/fetch";
-import { z } from "zod/v4";
+import { z } from "zod";
 import type { CompletionsObject, CostsObject, Page } from "./types";
 
 // Environment validation
@@ -22,27 +22,41 @@ export async function fetchOrganizationCosts(
 	startTime: number,
 	days: number,
 ): Promise<number> {
-	const { data, error } = await betterFetch<Page<CostsObject>>(
-		`https://api.openai.com/v1/organization/costs?start_time=${startTime}&limit=${days}`,
-		{
+	let totalCost = 0;
+	let page: string | null = null;
+
+	do {
+		const url: string = page
+			? `https://api.openai.com/v1/organization/costs?page=${page}`
+			: `https://api.openai.com/v1/organization/costs?start_time=${startTime}&limit=${days}`;
+
+		const { data, error } = await betterFetch<Page<CostsObject>>(url, {
 			headers: { Authorization: `Bearer ${Bun.env.OPENAI_ADMIN_KEY}` },
-		},
-	);
+		});
 
-	if (error) {
-		console.error("Error fetching organization costs:", error);
-		throw new Error(`Failed to fetch organization costs: ${error.message}`);
-	}
+		if (error) {
+			console.error("Error fetching organization costs:", error);
+			if (error.status === 401 || error.status === 403) {
+				throw new Error(
+					"Missing or invalid OPENAI_ADMIN_KEY. Please check your environment variables.",
+				);
+			}
+			throw new Error(`Failed to fetch organization costs: ${error.message}`);
+		}
 
-	if (!data) {
-		return 0;
-	}
+		if (!data) {
+			break;
+		}
 
-	// Calculate total cost
-	const totalCost = data.data
-		.flatMap((bucket) => bucket.results)
-		.flatMap((costs) => costs.amount)
-		.reduce((sum, { value }) => sum + value, 0);
+		// Calculate cost for this page
+		const pageCost = data.data
+			.flatMap((bucket) => bucket.results)
+			.flatMap((costs) => costs.amount)
+			.reduce((sum, { value }) => sum + value, 0);
+
+		totalCost += pageCost;
+		page = data.has_more ? data.next_page : null;
+	} while (page);
 
 	return totalCost;
 }
@@ -54,27 +68,39 @@ export async function fetchCompletionsUsage(
 	startTime: number,
 	days: number,
 ): Promise<CompletionsObject[]> {
-	const { data, error } = await betterFetch<Page<CompletionsObject>>(
-		`https://api.openai.com/v1/organization/usage/completions?start_time=${startTime}&group_by=project_id&group_by=model&group_by=batch&limit=${days}`,
-		{
-			headers: { Authorization: `Bearer ${Bun.env.OPENAI_ADMIN_KEY}` },
-		},
-	);
-
-	if (error) {
-		console.error("Error fetching completions usage:", error);
-		throw new Error(`Failed to fetch completions usage: ${error.message}`);
-	}
-
-	if (!data) {
-		return [];
-	}
-
-	// Flatten results
 	const allResults: CompletionsObject[] = [];
-	for (const bucket of data.data) {
-		allResults.push(...bucket.results);
-	}
+	let page: string | null = null;
+
+	do {
+		const url: string = page
+			? `https://api.openai.com/v1/organization/usage/completions?page=${page}`
+			: `https://api.openai.com/v1/organization/usage/completions?start_time=${startTime}&group_by=project_id&group_by=model&group_by=batch&limit=${days}`;
+
+		const { data, error } = await betterFetch<Page<CompletionsObject>>(url, {
+			headers: { Authorization: `Bearer ${Bun.env.OPENAI_ADMIN_KEY}` },
+		});
+
+		if (error) {
+			console.error("Error fetching completions usage:", error);
+			if (error.status === 401 || error.status === 403) {
+				throw new Error(
+					"Missing or invalid OPENAI_ADMIN_KEY. Please check your environment variables.",
+				);
+			}
+			throw new Error(`Failed to fetch completions usage: ${error.message}`);
+		}
+
+		if (!data) {
+			break;
+		}
+
+		// Flatten results for this page
+		for (const bucket of data.data) {
+			allResults.push(...bucket.results);
+		}
+
+		page = data.has_more ? data.next_page : null;
+	} while (page);
 
 	return allResults;
 }

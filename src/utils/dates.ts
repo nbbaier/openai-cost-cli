@@ -6,11 +6,20 @@ export function getDayStart() {
 }
 
 export function getCurrentMonthStart() {
-	const now = Temporal.Now.zonedDateTimeISO();
-	const { year, month } = now;
+	const nowUTC = Temporal.Now.zonedDateTimeISO("UTC");
+	const nowLocal = Temporal.Now.zonedDateTimeISO();
+
+	// Use UTC for API consistency and boundary calculations
+	const { year, month } = nowUTC;
 	const date = Temporal.PlainDate.from(
 		`${year}-${month.toString().padStart(2, "0")}-01`,
 	);
+
+	// Get local timezone info for display
+	const localMonthStart = date.toZonedDateTime(nowLocal.timeZoneId);
+	const localMonthEnd = localMonthStart
+		.add({ months: 1 })
+		.subtract({ days: 1 });
 
 	return {
 		date,
@@ -18,6 +27,11 @@ export function getCurrentMonthStart() {
 		daysInMonth: date.daysInMonth,
 		year,
 		month,
-		monthName: now.toLocaleString("en-US", { month: "long" }),
+		monthName: nowLocal.toLocaleString("en-US", { month: "long" }),
+		// Additional local timezone info
+		localTimeZone: nowLocal.timeZoneId,
+		localMonthStart: localMonthStart,
+		localMonthEnd: localMonthEnd,
+		utcMonthStart: date.toZonedDateTime("UTC"),
 	};
 }

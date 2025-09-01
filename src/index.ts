@@ -1,3 +1,3 @@
 import getMonthlyCost from "./getMonthlyCost";
 
-getMonthlyCost();
+await getMonthlyCost();
