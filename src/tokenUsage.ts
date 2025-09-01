@@ -1,3 +1,4 @@
+import type { Temporal } from "temporal-polyfill";
 import { fetchCompletionsUsage } from "./api";
 import type { CliArgs } from "./utils/cli";
 import { parseArgs, showHelp } from "./utils/cli";
@@ -21,6 +22,8 @@ async function runTokenUsage(args: CliArgs = {}) {
 		daysInRange?: number;
 		monthName: string;
 		year: number;
+		startDate?: Temporal.PlainDate;
+		endDate?: Temporal.PlainDate;
 	};
 	let periodDescription: string;
 
@@ -30,7 +33,7 @@ async function runTokenUsage(args: CliArgs = {}) {
 		periodDescription = `${dateInfo.monthName} ${dateInfo.year}`;
 	} else if (args.start && args.end) {
 		dateInfo = parseDateRange(args.start, args.end);
-		periodDescription = `${dateInfo.startDate.toString()} to ${dateInfo.endDate.toString()}`;
+		periodDescription = `${dateInfo.startDate?.toString()} to ${dateInfo.endDate?.toString()}`;
 	} else {
 		// Default to current month
 		const currentMonth = getCurrentMonthStart();
@@ -45,7 +48,7 @@ async function runTokenUsage(args: CliArgs = {}) {
 
 	const allResults = await fetchCompletionsUsage(
 		dateInfo.startTimestamp,
-		dateInfo.daysInMonth || dateInfo.daysInRange,
+		dateInfo.daysInMonth || dateInfo.daysInRange || 1,
 	);
 	const sumByModel = summarizeTokenUsageByModel(allResults);
 

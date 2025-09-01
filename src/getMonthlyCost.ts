@@ -16,6 +16,8 @@ export default async (args: CliArgs = {}) => {
 			daysInRange?: number;
 			monthName: string;
 			year: number;
+			startDate?: { toString(): string };
+			endDate?: { toString(): string };
 		};
 		let periodDescription: string;
 
@@ -25,7 +27,7 @@ export default async (args: CliArgs = {}) => {
 			periodDescription = `${dateInfo.monthName} ${dateInfo.year}`;
 		} else if (args.start && args.end) {
 			dateInfo = parseDateRange(args.start, args.end);
-			periodDescription = `${dateInfo.startDate.toString()} to ${dateInfo.endDate.toString()}`;
+			periodDescription = `${dateInfo.startDate?.toString() || args.start} to ${dateInfo.endDate?.toString() || args.end}`;
 		} else {
 			// Default to current month
 			const currentMonth = getCurrentMonthStart();
@@ -40,7 +42,7 @@ export default async (args: CliArgs = {}) => {
 
 		const totalCost = await fetchOrganizationCosts(
 			dateInfo.startTimestamp,
-			dateInfo.daysInMonth || dateInfo.daysInRange,
+			dateInfo.daysInMonth || dateInfo.daysInRange || 1,
 		);
 
 		const result = {
