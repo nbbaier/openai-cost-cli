@@ -27,7 +27,7 @@ export async function fetchOrganizationCosts(
 
 	do {
 		const url: string = page
-			? `https://api.openai.com/v1/organization/costs?page=${page}`
+			? `https://api.openai.com/v1/organization/costs?start_time=${startTime}&limit=${days}&page=${page}`
 			: `https://api.openai.com/v1/organization/costs?start_time=${startTime}&limit=${days}`;
 
 		const { data, error } = await betterFetch<Page<CostsObject>>(url, {
@@ -73,7 +73,7 @@ export async function fetchCompletionsUsage(
 
 	do {
 		const url: string = page
-			? `https://api.openai.com/v1/organization/usage/completions?page=${page}`
+			? `https://api.openai.com/v1/organization/usage/completions?start_time=${startTime}&group_by=project_id&group_by=model&group_by=batch&limit=${days}&page=${page}`
 			: `https://api.openai.com/v1/organization/usage/completions?start_time=${startTime}&group_by=project_id&group_by=model&group_by=batch&limit=${days}`;
 
 		const { data, error } = await betterFetch<Page<CompletionsObject>>(url, {
