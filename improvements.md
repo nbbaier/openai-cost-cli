@@ -98,10 +98,11 @@ Quick verify checklist after changes:
 8. **Code formatting** (a40fdad) - Applied linting and formatting fixes
 
 **New CLI Features Available:**
-- `--month 2025-01` - Specific month data
-- `--start 2025-01-01 --end 2025-01-31` - Custom date ranges
-- `--json` - JSON output format
-- `--csv` - CSV output format
-- `--top N` - Limit results to top N
-- `--help` - Usage information
-- Pretty console tables (default)
+
+-  `--month 2025-01` - Specific month data
+-  `--start 2025-01-01 --end 2025-01-31` - Custom date ranges
+-  `--json` - JSON output format
+-  `--csv` - CSV output format
+-  `--top N` - Limit results to top N
+-  `--help` - Usage information
+-  Pretty console tables (default)
