@@ -68,3 +68,13 @@ export default async (args: CliArgs = {}) => {
 		throw error;
 	}
 };
+
+export async function fn() {
+	const currentMonth = getCurrentMonthStart();
+	const periodDescription = `${currentMonth.monthName} ${currentMonth.year}`;
+	const totalCost = await fetchOrganizationCosts(
+		currentMonth.startTimestamp,
+		currentMonth.daysInMonth || 1,
+	);
+	return totalCost;
+}

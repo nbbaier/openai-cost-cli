@@ -1,4 +1,4 @@
-import getMonthlyCost from "./getMonthlyCost";
+import { fn } from "./getMonthlyCost";
 import { parseArgs, showHelp } from "./utils/cli";
 
 try {
@@ -9,7 +9,8 @@ try {
 		process.exit(0);
 	}
 
-	await getMonthlyCost(args);
+	const totalCost = await fn();
+	console.log(totalCost);
 } catch (error) {
 	console.error("Error:", error instanceof Error ? error.message : error);
 	process.exit(1);

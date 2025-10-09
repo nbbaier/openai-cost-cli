@@ -23,7 +23,8 @@ export function parseMonthString(monthStr: string) {
 	const date = Temporal.PlainDate.from(`${year}-${monthNumStr}-01`);
 	return {
 		date,
-		startTimestamp: date.toZonedDateTime("UTC").epochSeconds,
+		startTimestamp:
+			Number(date.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
 		daysInMonth: date.daysInMonth,
 		year,
 		month,
@@ -45,7 +46,8 @@ export function parseDateRange(startStr: string, endStr: string) {
 	return {
 		startDate,
 		endDate,
-		startTimestamp: startDate.toZonedDateTime("UTC").epochSeconds,
+		startTimestamp:
+			Number(startDate.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
 		daysInRange: daysDiff,
 		year: startDate.year,
 		month: startDate.month,
@@ -71,7 +73,8 @@ export function getCurrentMonthStart() {
 
 	return {
 		date,
-		startTimestamp: date.toZonedDateTime("UTC").epochSeconds,
+		startTimestamp:
+			Number(date.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
 		daysInMonth: date.daysInMonth,
 		year,
 		month,
