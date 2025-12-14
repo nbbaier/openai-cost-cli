@@ -4,7 +4,7 @@ import type { CliArgs } from "./utils/cli";
 import { parseArgs, showHelp } from "./utils/cli";
 import {
 	getCurrentMonthStart,
-	parseDateRange,
+	parseDateArguments,
 	parseMonthString,
 } from "./utils/dates";
 import {
@@ -31,9 +31,22 @@ async function runTokenUsage(args: CliArgs = {}) {
 	if (args.month) {
 		dateInfo = parseMonthString(args.month);
 		periodDescription = `${dateInfo.monthName} ${dateInfo.year}`;
-	} else if (args.start && args.end) {
-		dateInfo = parseDateRange(args.start, args.end);
-		periodDescription = `${dateInfo.startDate?.toString()} to ${dateInfo.endDate?.toString()}`;
+	} else if (args.start || args.end) {
+		const parsedDates = parseDateArguments(args.start, args.end);
+		if (parsedDates) {
+			dateInfo = parsedDates;
+			periodDescription = `${dateInfo.startDate?.toString()} to ${dateInfo.endDate?.toString()}`;
+		} else {
+			// Fallback to current month if parsing failed
+			const currentMonth = getCurrentMonthStart();
+			dateInfo = {
+				startTimestamp: currentMonth.startTimestamp,
+				daysInMonth: currentMonth.daysInMonth,
+				monthName: currentMonth.monthName,
+				year: currentMonth.year,
+			};
+			periodDescription = `${currentMonth.monthName} ${currentMonth.year}`;
+		}
 	} else {
 		// Default to current month
 		const currentMonth = getCurrentMonthStart();

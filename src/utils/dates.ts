@@ -86,3 +86,57 @@ export function getCurrentMonthStart() {
 		utcMonthStart: date.toZonedDateTime("UTC"),
 	};
 }
+
+export function parseDateArguments(startStr?: string, endStr?: string) {
+	// If both start and end are provided, use the existing parseDateRange
+	if (startStr && endStr) {
+		return parseDateRange(startStr, endStr);
+	}
+
+	// If only start is provided, use it as start and today as end
+	if (startStr && !endStr) {
+		const startDate = Temporal.PlainDate.from(startStr);
+		const endDate = Temporal.Now.plainDateISO("UTC");
+
+		if (Temporal.PlainDate.compare(startDate, endDate) > 0) {
+			throw new Error("Start date cannot be in the future");
+		}
+
+		const daysDiff = startDate.until(endDate).days + 1;
+
+		return {
+			startDate,
+			endDate,
+			startTimestamp:
+				Number(startDate.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
+			daysInRange: daysDiff,
+			year: startDate.year,
+			month: startDate.month,
+			monthName: startDate.toLocaleString("en-US", { month: "long" }),
+		};
+	}
+
+	// If only end is provided, use the start of that month as start
+	if (!startStr && endStr) {
+		const endDate = Temporal.PlainDate.from(endStr);
+		const startDate = Temporal.PlainDate.from(
+			`${endDate.year}-${endDate.month.toString().padStart(2, "0")}-01`,
+		);
+
+		const daysDiff = startDate.until(endDate).days + 1;
+
+		return {
+			startDate,
+			endDate,
+			startTimestamp:
+				Number(startDate.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
+			daysInRange: daysDiff,
+			year: startDate.year,
+			month: startDate.month,
+			monthName: startDate.toLocaleString("en-US", { month: "long" }),
+		};
+	}
+
+	// If neither is provided, return null (caller will use default behavior)
+	return null;
+}
