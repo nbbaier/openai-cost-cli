@@ -108,7 +108,8 @@ export function parseDateArguments(startStr?: string, endStr?: string) {
 			startDate,
 			endDate,
 			startTimestamp:
-				Number(startDate.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
+				Number(startDate.toZonedDateTime("UTC").epochNanoseconds) /
+				1_000_000_000,
 			daysInRange: daysDiff,
 			year: startDate.year,
 			month: startDate.month,
@@ -129,7 +130,8 @@ export function parseDateArguments(startStr?: string, endStr?: string) {
 			startDate,
 			endDate,
 			startTimestamp:
-				Number(startDate.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
+				Number(startDate.toZonedDateTime("UTC").epochNanoseconds) /
+				1_000_000_000,
 			daysInRange: daysDiff,
 			year: startDate.year,
 			month: startDate.month,
