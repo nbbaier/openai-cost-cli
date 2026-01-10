@@ -1,8 +1,18 @@
 import { Temporal } from "temporal-polyfill";
 
-export function getDayStart() {
-	const now = Temporal.Now.zonedDateTimeISO();
-	console.log(now.toString());
+export function getTodayRange() {
+	const today = Temporal.Now.plainDateISO("UTC");
+	return {
+		startDate: today,
+		endDate: today,
+		startTimestamp:
+			Number(today.toZonedDateTime("UTC").epochNanoseconds) / 1_000_000_000,
+		daysInRange: 1,
+		year: today.year,
+		month: today.month,
+		monthName: today.toLocaleString("en-US", { month: "long" }),
+		dayOfMonth: today.day,
+	};
 }
 
 export function parseMonthString(monthStr: string) {

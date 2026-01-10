@@ -4,6 +4,7 @@ import type { CliArgs } from "./utils/cli";
 import { parseArgs, showHelp } from "./utils/cli";
 import {
 	getCurrentMonthStart,
+	getTodayRange,
 	parseDateArguments,
 	parseMonthString,
 } from "./utils/dates";
@@ -31,7 +32,11 @@ async function runTokenCosts(args: CliArgs = {}) {
 	let periodDescription: string;
 
 	// Determine date range based on arguments
-	if (args.month) {
+	if (args.today) {
+		const todayInfo = getTodayRange();
+		dateInfo = todayInfo;
+		periodDescription = `Today (${todayInfo.monthName} ${todayInfo.dayOfMonth}, ${todayInfo.year})`;
+	} else if (args.month) {
 		dateInfo = parseMonthString(args.month);
 		periodDescription = `${dateInfo.monthName} ${dateInfo.year}`;
 	} else if (args.start || args.end) {

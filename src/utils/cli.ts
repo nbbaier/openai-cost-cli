@@ -2,6 +2,7 @@ export interface CliArgs {
 	month?: string;
 	start?: string;
 	end?: string;
+	today?: boolean;
 	json?: boolean;
 	csv?: boolean;
 	groupBy?: "model" | "project" | "user";
@@ -83,6 +84,10 @@ export function parseArgs(): CliArgs {
 				}
 				break;
 
+			case "--today":
+				parsed.today = true;
+				break;
+
 			case "--help":
 			case "-h":
 				parsed.help = true;
@@ -107,6 +112,7 @@ Options:
   --month <YYYY-MM>        Show data for specific month (e.g., --month 2025-01)
   --start <YYYY-MM-DD>     Start date for custom range
   --end <YYYY-MM-DD>       End date for custom range
+  --today                  Show only today's usage
   --json                   Output as JSON
   --csv                    Output as CSV
   --group-by <type>        Group results by: model, project, user
