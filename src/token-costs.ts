@@ -14,9 +14,12 @@ import {
 	formatAsTable,
 	limitResults,
 } from "./utils/output";
-import { summarizeTokenUsageByModel } from "./utils/utils";
+import {
+	formatCurrency,
+	summarizeTokenUsageByModelWithCost,
+} from "./utils/utils";
 
-async function runTokenUsage(args: CliArgs = {}) {
+async function runTokenCosts(args: CliArgs = {}) {
 	let dateInfo: {
 		startTimestamp: number;
 		daysInMonth?: number;
@@ -68,32 +71,43 @@ async function runTokenUsage(args: CliArgs = {}) {
 		dateInfo.startTimestamp,
 		dateInfo.daysInMonth || dateInfo.daysInRange || 1,
 	);
-	const sumByModel = summarizeTokenUsageByModel(allResults);
+	const sumByModelWithCost = summarizeTokenUsageByModelWithCost(allResults);
 
 	// Convert to array format for output
-	const modelData = Object.entries(sumByModel).map(([model, usage]) => ({
-		model,
-		input_tokens: usage.input_tokens,
-		output_tokens: usage.output_tokens,
-		total_tokens: usage.input_tokens + usage.output_tokens,
-	}));
+	const modelData = Object.entries(sumByModelWithCost).map(
+		([model, usage]) => ({
+			model,
+			normalized: usage.normalized,
+			input_tokens: usage.input_tokens,
+			output_tokens: usage.output_tokens,
+			total_tokens: usage.input_tokens + usage.output_tokens,
+			cost: usage.cost,
+			formatted_cost: formatCurrency(usage.cost),
+		}),
+	);
 
 	// Apply top limit if specified
 	const limitedData = args.top ? limitResults(modelData, args.top) : modelData;
+
+	// Calculate total cost
+	const totalCost = modelData.reduce((sum, model) => sum + model.cost, 0);
 
 	// Output based on format
 	if (args.json) {
 		console.log(
 			formatAsJson({
 				period: periodDescription,
+				totalCost,
+				formattedTotalCost: formatCurrency(totalCost),
 				models: limitedData,
 			}),
 		);
 	} else if (args.csv) {
 		console.log(formatAsCsv(limitedData));
 	} else {
-		console.log(`Token usage for ${periodDescription}:`);
+		console.log(`Token costs for ${periodDescription}:`);
 		console.log(formatAsTable(limitedData));
+		console.log(`\nTotal cost: ${formatCurrency(totalCost)}`);
 	}
 }
 
@@ -101,11 +115,11 @@ try {
 	const args = parseArgs();
 
 	if (args.help) {
-		showHelp("src/tokenUsage.ts");
+		showHelp("src/tokenCosts.ts");
 		process.exit(0);
 	}
 
-	await runTokenUsage(args);
+	await runTokenCosts(args);
 } catch (error) {
 	console.error("Error:", error instanceof Error ? error.message : error);
 	process.exit(1);

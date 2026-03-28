@@ -1,4 +1,4 @@
-import { fn } from "./getMonthlyCost";
+import { fn } from "./get-monthly-costs";
 import { parseArgs, showHelp } from "./utils/cli";
 
 try {
